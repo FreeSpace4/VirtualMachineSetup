@@ -28,3 +28,54 @@ Key steps in setting up a virtual machine typically include:
 10. **Monitoring and Management:** Use monitoring tools and management interfaces provided by the hypervisor to oversee VM performance, resource utilization, and health.
 
 Virtual machines are valuable for various purposes, including software testing, development environments, server consolidation, and running legacy applications. They offer flexibility, scalability, and isolation, making them a fundamental component in modern computing environments, especially in cloud computing and data center management.
+
+
+
+Creating and managing virtual machines via the command-line interface (CLI) depends on the virtualization technology or hypervisor you're using. Here's an example using the command-line interface for creating a virtual machine using VirtualBox, a popular open-source hypervisor:
+
+Note: Ensure you have VirtualBox installed on your system before using these commands.
+
+Create a Virtual Machine:
+
+To create a new virtual machine named "MyVM," you can use the VBoxManage createvm command:
+
+bash
+Copy code
+VBoxManage createvm --name "MyVM" --ostype "Linux_64" --register
+This command creates a VM named "MyVM" for a 64-bit Linux guest OS.
+
+Configure Virtual Machine Settings:
+
+Set the VM's memory, CPU, and other settings using the VBoxManage modifyvm command:
+
+```bash
+VBoxManage modifyvm "MyVM" --memory 1024 --cpus 2 --boot1 dvd --boot2 disk --boot3 none --boot4 none
+```
+This command configures the VM with 1GB of RAM, 2 CPU cores, and specifies the boot order.
+
+Create a Virtual Hard Disk:
+
+You'll need to create a virtual hard disk for your VM using the VBoxManage createhd command:
+
+```bash
+VBoxManage createhd --filename "MyVM.vdi" --size 10240
+```
+This creates a 10GB virtual hard disk named "MyVM.vdi."
+
+Attach ISO for Installation:
+
+To attach an ISO image for the OS installation, use the VBoxManage storageattach command:
+
+```bash
+VBoxManage storageattach "MyVM" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium /path/to/iso-file.iso
+```
+Replace /path/to/iso-file.iso with the actual path to your ISO file.
+
+Start the Virtual Machine:
+
+Finally, start the VM with the following command:
+
+```bash
+VBoxManage startvm "MyVM" --type headless
+```
+The --type headless option starts the VM in headless mode, meaning it runs without a graphical user interface.
